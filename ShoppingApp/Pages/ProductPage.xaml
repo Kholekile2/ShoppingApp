@@ -1,0 +1,20 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ShoppingApp.Pages.ProductPage"
+             Title="ProductPage">
+
+
+    <ListView x:Name="itemListView">
+        <ListView.ItemTemplate>
+            <DataTemplate>
+                <ViewCell>
+                    <StackLayout Padding="10">
+                        <Label Text="{Binding ItemsName}" FontSize="18"/>
+                        <Label Text="{Binding ItemsPrice, StringFormat='Price: {0:C}'}" FontSize="16" />
+                        <Label Text="{Binding ItemsQuantity, StringFormat='Available Quantity: {0}'}" FontSize="16" />
+                    </StackLayout>
+                </ViewCell>
+            </DataTemplate>
+        </ListView.ItemTemplate>
+    </ListView>
+</ContentPage>
