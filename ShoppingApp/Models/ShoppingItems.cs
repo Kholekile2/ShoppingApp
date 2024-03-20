@@ -1,4 +1,5 @@
-﻿using SQLite;
+﻿using System;
+using SQLite;
 using SQLiteNetExtensions.Attributes;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,8 @@ namespace ShoppingApp.Models
         [PrimaryKey, AutoIncrement]
         public int ShoppingItemsId { get; set; }
 
-        public int CustomerProfileId { get; set; }
+        //[ForeignKey(typeof(CustomerProfile))]
+        //public int CustomerProfileId { get; set; }
 
         public string ItemsName { get; set; }
 

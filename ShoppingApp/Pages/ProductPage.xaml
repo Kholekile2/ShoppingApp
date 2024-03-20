@@ -1,20 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ShoppingApp.Pages.ProductPage"
+             xmlns:models="clr-namespace:ShoppingApp.Models"
              Title="ProductPage">
-
-
-    <ListView x:Name="itemListView">
-        <ListView.ItemTemplate>
-            <DataTemplate>
-                <ViewCell>
-                    <StackLayout Padding="10">
-                        <Label Text="{Binding ItemsName}" FontSize="18"/>
-                        <Label Text="{Binding ItemsPrice, StringFormat='Price: {0:C}'}" FontSize="16" />
-                        <Label Text="{Binding ItemsQuantity, StringFormat='Available Quantity: {0}'}" FontSize="16" />
-                    </StackLayout>
-                </ViewCell>
-            </DataTemplate>
-        </ListView.ItemTemplate>
-    </ListView>
+             
+    
+    <ContentPage.Content>
+        <ListView x:Name="ShoppingItemsListView" ItemsSource="{Binding Items}" HasUnevenRows="True">
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="models:ShoppingItems" >
+                    <ViewCell>
+                        <Frame BorderColor="Gray" CornerRadius="10" Margin="5">
+                            <StackLayout Orientation="Horizontal">
+                                <Image Source="{Binding ItemImage}" WidthRequest="100" HeightRequest="100" Aspect="AspectFill"/>
+                                <StackLayout Padding="10" VerticalOptions="Center">
+                                    <Label Text="{Binding ItemsName}" FontAttributes="Bold"/>
+                                    <Label Text="{Binding ItemsPrice}" FontSize="Medium"/>
+                                    <Label Text="Quantity" FontSize="Medium"/>
+                                    <Label Text="{Binding ItemsQuantity}" FontSize="Medium"/>
+                                </StackLayout>
+                            </StackLayout>
+                        </Frame>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </ContentPage.Content>
 </ContentPage>

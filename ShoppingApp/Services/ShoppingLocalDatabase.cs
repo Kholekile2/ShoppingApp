@@ -1,14 +1,15 @@
 ﻿using ShoppingApp.Models;
 using SQLite;
+using System.Collections;
+using System;
 using SQLiteNetExtensions.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Mail;
-using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
-using System.Xml.Linq;
+using System.Data.Common;
+
 
 namespace ShoppingApp.Services
 {
@@ -22,7 +23,6 @@ namespace ShoppingApp.Services
             string pathToDb = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
             //return pathToDb + filename;
             return Path.Combine(pathToDb, filename);
-
             
         }
 
@@ -54,16 +54,17 @@ namespace ShoppingApp.Services
             
             if (_dbconnection.Table<ShoppingItems>().Count()==0) 
             {
-                List<ShoppingItems> items = new List<ShoppingItems>();
+                List<ShoppingItems> items = new List<ShoppingItems>()
                 //ShoppingItems customerItems = new ShoppingItems()
                 {
+
                     new ShoppingItems()
                     {
                         ItemsName = "Converse",
                         ItemsPrice = "R1 499.99",
                         ItemsQuantity = 50,
                         ItemImage = "converse.jpeg",
-                    };
+                    },
 
                     new ShoppingItems()
                     {
@@ -71,7 +72,7 @@ namespace ShoppingApp.Services
                         ItemsPrice = "R1 350.00",
                         ItemsQuantity = 20,
                         ItemImage = "reebok.jpeg",
-                    };
+                    },
 
                     new ShoppingItems()
                     {
@@ -79,7 +80,7 @@ namespace ShoppingApp.Services
                         ItemsPrice = "R750.00",
                         ItemsQuantity = 10,
                         ItemImage = "superga.jpeg",
-                    };
+                    },
 
                     new ShoppingItems()
                     {
@@ -87,13 +88,24 @@ namespace ShoppingApp.Services
                         ItemsPrice = "R800.00",
                         ItemsQuantity = 10,
                         ItemImage = "superstar.jpeg",
-                    };
+                    },
                     
                 };
-                _dbconnection.Insert(items);
-            
-            
+                _dbconnection.InsertAll(items);
+
             }
+        }
+
+        public void AddToCart(ShoppingItems item, int quantity, int customerProfileId)
+        {
+            var cartItem = new ShoppingCart
+            {
+                ShoppingItem = item,
+                Quantity = quantity,
+                CustomerProfileId = customerProfileId
+            };
+
+            _dbconnection.Insert(cartItem);
         }
 
         public List<ShoppingItems> GetAllShoppingItems()
